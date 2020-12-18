@@ -1,14 +1,27 @@
 {
-  "name": "static-site",
+  "name": "readme-js",
   "version": "1.0.0",
-  "description": "",
+  "description": "A professional README generator, powered by Node.js/JavaScript",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Giamo Lao",
   "license": "ISC",
   "dependencies": {
     "inquirer": "^6.3.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TechnicalParadox/readme-js.git"
+  },
+  "keywords": [
+    "'readme",
+    "generator'",
+    "'readme'"
+  ],
+  "bugs": {
+    "url": "https://github.com/TechnicalParadox/readme-js/issues"
+  },
+  "homepage": "https://github.com/TechnicalParadox/readme-js#readme"
 }
