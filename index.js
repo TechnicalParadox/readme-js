@@ -50,15 +50,34 @@ const questions = // TODO: Skippable questions should be skipped if quick = true
   {
     type: 'input',
     name: 'usage',
-    message: 'Instructions for Use/Examples of Use:',
+    message: 'Instructions for Use/Examples of Use (*):',
     validate: a => {return a ? true : 'Please enter instructions for/examples of use!'}
+  },
+  // License (Required)
+  {
+    type: 'list',
+    name: 'license',
+    message: 'Select a License (*):',
+    choices:
+    [
+      'Apache License 2.0',
+      'BSD 3-Clause ("New/Revised") License',
+      'BSD 2-Clause ("Simplified/FreeBSD") License',
+      'GNU General Public License (GPL)',
+      'GNU Library or "Lesser" General Public License (LGPL)',
+      'MIT License',
+      'Mozilla Public License 2.0',
+      'Common Development and Distribution License',
+      'Eclipse Public License version 2.0'
+    ],
+    default: 0
   }
-
 ];
 
 // Function to write README file
 function writeToFile(fileName, data)
 {
+  console.log(data);
   const readmeMD = generateMarkdown(data);
   fs.writeFile(('./'+fileName), readmeMD, err =>
     {
@@ -97,6 +116,16 @@ function getInput()
 // Handle the answers to the initial inquirer prompt
 function postPrompter(answers)
 {
+  // TODO: Let user add screenshots (required)
+
+  // TODO: If license is custom, allow entry of badge url and link to terms
+
+  // TODO: Ask user for contributors (required)
+
+  // TODO: Ask user for features (if !quick), each feature emphasized with description
+
+  // TODO: if !quick, ask user for example tests of application (if applicable)
+
   // TODO: Check if the user wants to change anything and change it
 
   // Save file

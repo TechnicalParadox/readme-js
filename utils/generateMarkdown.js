@@ -27,7 +27,9 @@ function generateMarkdown(data)
 ##### ${data.desc}
 ---------------
 ${toc(data.toc)}
-
+${install(data.installation)}
+## Usage
+${data.usage}
 `;
 }
 
@@ -43,4 +45,14 @@ function toc(use)
     return "";
 }
 
+// Returns the installation instructions, if needed
+function install(instructions)
+{
+  if (instructions)
+  {
+    return "## Installation:\n"+instructions;
+  }
+  else
+    return "";
+}
 module.exports = generateMarkdown;
