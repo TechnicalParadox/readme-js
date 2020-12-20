@@ -3,8 +3,58 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const generateMarkdown = require('./utils/generateMarkdown.js');
 
+var quick = false;
+
 // TODO: Create an array of questions for user input
-const questions = [];
+const questions = // TODO: Skippable questions should be skipped if quick = true
+[
+  // Project Name (Required)
+  {
+    type: 'input',
+    name: 'title',
+    message: 'Project Name (*):',
+    validate: a => {return a ? true : 'Please enter a project name!'}
+  },
+  // Project Description (Required)
+  {
+    type: 'input',
+    name: 'desc',
+    message: 'Project Description (*):',
+    validate: a => {return a ? true : 'Please enter a project description!'}
+  },
+  // Table of Contents
+  {
+    type: 'confirm',
+    name: 'toc',
+    message: 'Display Table of Contents?:',
+    default: false,
+    when: answers => {return !quick}
+  },
+  // Installation Instructions (check if needed)
+  {
+    type: 'confirm',
+    name: 'installable',
+    message: 'Is your project to be installed?:',
+    default: false,
+    when: answers => {return !quick}
+  },
+  // Installation Instructions (get if needed)
+  {
+    type: 'input',
+    name: 'installation',
+    message: 'Installation Instructions:',
+    validate: a => {return a ? true : 'Please enter the installation instructions!'},
+    when: answers => {return answers.installable}
+  },
+  // Usage (Required)
+  {
+    type: 'input',
+    name: 'usage',
+    message: 'Instructions for Use/Examples of Use:',
+    validate: a => {return a ? true : 'Please enter instructions for/examples of use!'}
+  }
+
+];
 
 // Function to write README file
 function writeToFile(fileName, data)
@@ -20,7 +70,24 @@ function writeToFile(fileName, data)
 // TODO: Create a function to initialize app
 function init()
 {
-  // Get input from user
+  // Check if user wants quick README or full custom.
+  inquirer
+    .prompt
+    (
+      {
+        type: 'confirm',
+        name: 'quick',
+        message: 'Would you like to skip the extras and do this quickly?',
+        default: false
+      }
+    )
+    .then(a => {quick = a.quick; getInput();})
+    .catch(error => errorHandler(error));
+}
+
+// Get input from user
+function getInput()
+{
   inquirer
     .prompt(questions)
     .then(answers => postPrompter(answers))
@@ -33,7 +100,6 @@ function postPrompter(answers)
   // TODO: Check if the user wants to change anything and change it
 
   // Save file
-  let fileName = "README.md";
   inquirer
     .prompt
     (
@@ -46,10 +112,10 @@ function postPrompter(answers)
         }
       ]
     )
-    .then(data => {fileName = data.fileName;})
+    .then(data => {writeToFile(data.fileName, answers);})
     .catch(error => errorHandler(error));
 
-  writeFile(fileName, answers);
+
 }
 
 // Handle any errors that occur from the inquirer prompt

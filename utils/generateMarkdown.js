@@ -22,9 +22,25 @@ function renderLicenseSection(license)
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(data)
 {
-  return `# ${data.title}
+  return `
+# ${data.title}
+##### ${data.desc}
+---------------
+${toc(data.toc)}
 
-  `;
+`;
+}
+
+// Returns the table of contents section, if used
+function toc(use)
+{
+  if (use)
+  {
+    // TODO: return table of contents depending on what sections are added
+    return "## Table of Contents: \n * example \n * example \n---------------";
+  }
+  else
+    return "";
 }
 
 module.exports = generateMarkdown;
