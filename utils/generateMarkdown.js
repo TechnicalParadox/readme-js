@@ -51,7 +51,7 @@ function generateMarkdown(data)
   return `# ${data.title}
 ##### ${data.desc}
 ${renderLicenseSection(data.license, data.license_name, data.license_url, data.has_badge, data.license_badge_url)}
----------------${toc(data)}${install(data.installation)}
+---------------${toc(data)}${install(data.installation, data.deployedURL)}
 ## Usage
 ${data.usage}
 
@@ -91,14 +91,22 @@ function toc(data)
 }
 
 // Returns the installation instructions, if needed
-function install(instructions)
+function install(instructions, deployedURL)
 {
+  let section = "";
   if (instructions)
   {
     return "\n## Installation:\n"+instructions;
   }
   else
-    return "";
+  {
+    section += "\n ## Deployed URL:\n";
+    if (deployedURL)
+      section += "[Click to launch]("+deployedURL+")";
+    else
+      section += "This project is not yet deployed.";
+    return section;
+  }
 }
 
 // Returns the formatted markdown images

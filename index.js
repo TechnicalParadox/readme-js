@@ -45,8 +45,7 @@ const questions =
     type: 'confirm',
     name: 'installable',
     message: 'Is your project to be installed?:',
-    default: false,
-    when: a => {return !a.quick}
+    default: false
   },
   // Installation Instructions (get if needed)
   {
@@ -55,6 +54,13 @@ const questions =
     message: 'Installation Instructions (*):',
     validate: a => {return a ? true : 'Please enter the installation instructions!'},
     when: a => {return a.installable}
+  },
+  // If no install, link to deployed URL
+  {
+    type: 'input',
+    name: 'deployedURL',
+    message: 'What is the URL to your deployed application? Leave blank if not yet deployed:',
+    when: a => {return !a.installable}
   },
   // Usage (Required)
   {
