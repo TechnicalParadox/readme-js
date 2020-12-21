@@ -2,7 +2,7 @@
 // If there is no license, return an empty string
 function renderLicenseSection(license, customName, customURL, customBadge, badgeURL)
 {
-  let section = "###License\n";
+  let section = "### License\n";
 
   switch (license)
   {
@@ -41,7 +41,7 @@ function renderLicenseSection(license, customName, customURL, customBadge, badge
       break;
   }
   if (license != "None")
-    section += "\n*Click link for license details.*\n"
+    section += "\n\n*Click link for license details.*\n"
   return section;
 }
 
