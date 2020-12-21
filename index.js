@@ -3,10 +3,14 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const generateMarkdown = require('./utils/generateMarkdown.js');
 
-var quick = false;
+var ui;
+var contributors = [], contributorURLs = [];
+var imageAlts = [], imageURLs = [];
+var features = [];
+var tests = [];
 
-// TODO: Create an array of questions for user input
-const questions = // TODO: Skippable questions should be skipped if quick = true
+// Array of questions for user input
+const questions =
 [
   {
     type: 'confirm',
@@ -79,6 +83,7 @@ const questions = // TODO: Skippable questions should be skipped if quick = true
     ],
     default: 'Custom License'
   },
+  // If Custom License, do they have a custom badge?
   {
     type: 'confirm',
     name: 'has_badge',
@@ -86,21 +91,146 @@ const questions = // TODO: Skippable questions should be skipped if quick = true
     default: true,
     when: a => {return a.license == 'Custom License';}
   },
+  // If they have a custom badge, what is the relative filepath/URL?
   {
     type: 'input',
     name: 'license_badge_url',
     message: 'License Badge Filepath/URL (*):',
     validate: a => {return a ? true : 'Please enter the filepath/url!';},
     when: a => {return a.has_badge;}
+  },
+  // Contributor(s) (Required)
+  {
+    type: 'input',
+    name: 'contributors',
+    message: 'Enter contributors one by one, leave empty when finished (*):',
+    validate: a =>
+    {
+      if (!a && contributors.length == 0) // Need to enter at least one name
+        return "Please enter a contributor name!"
+      else if (!a) // Finished
+        return true;
+      else // Add to list and ask for next
+      {
+        console.log("\n" + a + " added to list of contributors.");
+        contributors.push(a);
+        return false;
+      }
+    }
+  },
+  // Contributor URLs (Required)
+  {
+    type: 'input',
+    name: 'contributorURLs',
+    message: 'Enter each contributor\'s GitHub URL one by one (*):',
+    validate: a =>
+    {
+      if (!a)
+        return "Please enter a GitHub URL!";
+      else
+      {
+        console.log("\n" + a + " added as the GitHub URL for " +contributors[contributorURLs.length]);
+        contributorURLs.push(a);
+        if (contributors.length != contributorURLs.length)
+          return false;
+        else return true;
+      }
+    }
+  },
+  // Image Descriptions (Required)
+  {
+    type: 'input',
+    name: 'imageAlts',
+    message: 'Enter descriptions of showcase images, one by one, leave blank when empty (*):',
+    validate: a =>
+    {
+      if (!a && imageAlts.length == 0) // Need to enter at least one name
+        return "Please enter an image description!"
+      else if (!a) // Finished
+        return true;
+      else // Add to list and ask for next
+      {
+        console.log("\n" + a + " added to list of image descriptions.");
+        imageAlts.push(a);
+        return false;
+      }
+    }
+  },
+  // Image URLs (Required)
+  {
+    type: 'input',
+    name: 'imageURLs',
+    message: 'Enter each image\'s filepath/URL one by one (*):',
+    validate: a =>
+    {
+      if (!a)
+        return "Please enter an image filepath/URL!";
+      else
+      {
+        console.log("\n" + a + " added as the filepath/URL for \"" +imageAlts[imageURLs.length] +"\"");
+        imageURLs.push(a);
+        if (imageAlts.length != imageURLs.length)
+          return false;
+        else return true;
+      }
+    }
+  },
+  // If !quick, ask if user wants to showcase features
+  {
+    type: 'confirm',
+    name: 'has_features',
+    message: 'Does your project have features you wish to showcase?:',
+    default: false,
+    when: a => {return !a.quick;}
+  },
+  // If user wants to showcase features, get features
+  {
+    type: 'input',
+    name: 'features',
+    message: 'Enter features one by one, leave blank when finished (*):',
+    validate: a =>
+    {
+      if (!a && features.length == 0)
+        return "Please enter a feature!";
+      else if (!a)
+        return true;
+      else
+      {
+        console.log("\n" + a + " added as a feature!");
+        features.push(a);
+        return false;
+      }
+    },
+    when: a => {return a.has_features;}
+  },
+  // If !quick, ask if user has example tests
+  {
+    type: 'confirm',
+    name: 'has_tests',
+    message: 'Do you have example test cases for your project?',
+    default: false,
+    when: a => {return !a.quick;}
+  },
+  // If user has example tests, add them
+  {
+    type: 'input',
+    name: 'tests',
+    message: 'Enter example tests, one by one, leave blank when finished (*):',
+    validate: a =>
+    {
+      if (!a && tests.length == 0)
+        return "Please enter an example test!";
+      else if (!a)
+        return true;
+      else
+      {
+        console.log("\n\"" + a + "\" added as an example test.");
+        tests.push(a);
+        return false;
+      }
+    },
+    when: a => {return a.has_tests}
   }
-
-  // TODO: Let user add screenshots (required)
-
-  // TODO: Ask user for contributors (required)
-
-  // TODO: Ask user for features (if !quick), each feature emphasized with description
-
-  // TODO: if !quick, ask user for example tests of application (if applicable)
 
   // TODO: Check if the user wants to change anything and change it
 ];
@@ -117,19 +247,26 @@ function writeToFile(fileName, data)
     });
 }
 
-// TODO: Create a function to initialize app
+// Function to initialize app
 function init()
 {
-  // Check if user wants quick README or full custom.
+  // Prompt the questions.
   inquirer
     .prompt(questions)
-    .then(answers => {postPrompter(answers);})
+    .then(answers => {answerHandler(answers);})
     .catch(error => errorHandler(error));
 }
 
 // Handle the answers to the initial inquirer prompt
-function postPrompter(answers)
+function answerHandler(answers)
 {
+  // Store lists in the answers data
+  answers.contributors = contributors;
+  answers.contributorURLs = contributorURLs;
+  answers.imageAlts = imageAlts;
+  answers.imageURLs = imageURLs;
+  answers.features = features;
+  answers.tests = tests;
 
   // Save file
   inquirer
@@ -140,14 +277,13 @@ function postPrompter(answers)
           type: 'input',
           name: 'fileName',
           message: 'Save as ("<filename>.md"):',
+          default: 'README.md',
           validate: a => {return a ? true : 'Please enter "<filename>.md"!'}
         }
       ]
     )
     .then(data => {writeToFile(data.fileName, answers);})
     .catch(error => errorHandler(error));
-
-
 }
 
 // Handle any errors that occur from the inquirer prompt

@@ -1,12 +1,9 @@
 
-# kjk
-##### kjlkjlkjlj
+# README.js
+##### a readme generator, made with JS and Inquirer
 ---------------
-## Table of Contents: 
- * example 
- * example 
----------------
-## Installation:
-jlhjhhjhjh
 ## Usage
-jhjkhkjhkjh
+node index.js
+![apple](apple.png)
+![./images/apple.png](oops)
+

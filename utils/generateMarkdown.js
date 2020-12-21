@@ -28,6 +28,7 @@ function generateMarkdown(data)
 ---------------${toc(data.toc)}${install(data.installation)}
 ## Usage
 ${data.usage}
+${generateImages(data.imageAlts, data.imageURLs)}
 `;
 }
 
@@ -53,4 +54,16 @@ function install(instructions)
   else
     return "";
 }
+
+// Returns the formatted markdown images
+function generateImages(alts, urls)
+{
+  let images = "";
+  for (let x = 0; x < alts.length; x++)
+  {
+    images += "!["+alts[x]+"]("+urls[x]+")\n";
+  }
+  return images;
+}
+
 module.exports = generateMarkdown;
