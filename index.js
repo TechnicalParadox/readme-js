@@ -262,6 +262,7 @@ const questions =
     message: 'Enter your contribution guidelines, leave blank to default to the Contributor Covenant:',
     when: a => {return a.has_cont_guidlines;}
   }
+  // TODO: Questions section with email/github contact info
 
   // TODO: Check if the user wants to change anything and change it
 ];
