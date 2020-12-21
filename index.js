@@ -73,8 +73,8 @@ const questions =
       'Apache License 2.0',
       'BSD 3-Clause ("New/Revised") License',
       'BSD 2-Clause ("Simplified/FreeBSD") License',
-      'GNU General Public License (GPL)',
-      'GNU Library or "Lesser" General Public License (LGPL)',
+      'GNU General Public License v3 (GPLv3)',
+      'GNU Library or "Lesser" General Public License v3 (LGPLv3)',
       'MIT License',
       'Mozilla Public License 2.0',
       'Eclipse Public License version 1.0',
@@ -261,8 +261,37 @@ const questions =
     name: 'cont_guidelines',
     message: 'Enter your contribution guidelines, leave blank to default to the Contributor Covenant:',
     when: a => {return a.has_cont_guidlines;}
+  },
+    // If !quick, does the user want a questions section?
+  {
+    type: 'confirm',
+    name: 'has_q',
+    message: 'Would you like to add a Questions section so users know where to direct their questions?:',
+    default: true,
+    when: a => {return !a.quick;}
+  },
+  // Questions section with email/github contact info
+  {
+    type: 'input',
+    name: 'q_contact_name',
+    message: 'What is the name of the person/organization to contact with questions?:',
+    when: a => {return a.has_q;},
+    validate: a => {return a ? true : "Please enter the name of the person/organization to contact with questions!";}
+  },
+  {
+    type: 'input',
+    name: 'q_contact_url',
+    message: 'What is the URL of the person/organization to contact with questions?:',
+    when: a => {return a.has_q;},
+    validate: a => {return a ? true : "Please enter the URL of the person/organization to contact with questions!";}
+  },
+  {
+    type: 'input',
+    name: 'q_contact_email',
+    message: 'What is the email of the person/organization to contact with questions?:',
+    when: a => {return a.has_q;},
+    validate: a => {return a ? true : "Please enter the email of the person/organization to contact with questions!";}
   }
-  // TODO: Questions section with email/github contact info
 
   // TODO: Check if the user wants to change anything and change it
 ];

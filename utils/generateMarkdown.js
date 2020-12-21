@@ -13,7 +13,7 @@ function renderLicenseSection(license, customName, customURL, customBadge, badge
         section += "["+customName+"]("+customURL+")";
       break;
     case 'None':
-      section += "This project does not currently use a license.\n";
+      section += "This project does not currently use a license.";
       break;
     case 'Apache License 2.0':
       section += `[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)`;
@@ -41,15 +41,14 @@ function renderLicenseSection(license, customName, customURL, customBadge, badge
       break;
   }
   if (license != "None")
-    section += "*Click link for license details.*\n"
+    section += "*Click link for license details.*"
   return section;
 }
 
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(data)
 {
-  return `
-# ${data.title}
+  return `# ${data.title}
 ##### ${data.desc}
 ${renderLicenseSection(data.license, data.license_name, data.license_url, data.has_badge, data.license_badge_url)}
 ---------------${toc(data)}${install(data.installation)}
@@ -62,9 +61,9 @@ ${
   generateContributors(data.contributors, data.contributorURLs) +
   generateList("Features", data.has_features, data.features) +
   generateContGuidelines(data.has_cont_guidlines, data.cont_guidelines) +
-  generateList("Tests", data.has_tests, data.tests)
-}
-`;
+  generateList("Tests", data.has_tests, data.tests) +
+  generateQuestions(data.has_q, data.q_contact_name, data.q_contact_url, data.q_contact_email)
+}`;
 }
 
 // Returns the table of contents section, if used
@@ -83,6 +82,8 @@ function toc(data)
       list += "* [Contribution Guidelines](#contribution-guidelines)\n";
     if (data.has_tests)
       list += "* [Tests](#tests)\n";
+    if (data.q_contact_name)
+      list += "* [Questions](#questions)\n";
     return list+"---------------";
   }
   else
@@ -130,6 +131,7 @@ function generateList(label, exists, items)
   else return "";
 }
 
+// Function that returns Contribution Guidelines section if needed
 function generateContGuidelines(exists, guidelines)
 {
   if (exists)
@@ -141,8 +143,20 @@ function generateContGuidelines(exists, guidelines)
     }
     return "## Contribution Guidelines\n"+guidelines+"\n";
   }
-  else
-    return "";
+  else return "";
+}
+
+// Function that returns the questions section of where questions should be directed, if needed
+function generateQuestions(exists, name, url, email)
+{
+  if (exists)
+  {
+    let section = "## Questions\nAny questions should be directed to \n";
+    section += "["+name+"]("+url+")\n";
+    section += "["+email+"](mailto:"+url+")";
+    return section;
+  }
+  else return "";
 }
 
 module.exports = generateMarkdown;
