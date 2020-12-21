@@ -13,7 +13,7 @@ function renderLicenseSection(license, customName, customURL, customBadge, badge
         section += "["+customName+"]("+customURL+")";
       break;
     case 'None':
-      section += "This project does not currently use a license.";
+      section += "This project does not currently use a license.\n";
       break;
     case 'Apache License 2.0':
       section += `[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)`;
@@ -41,7 +41,7 @@ function renderLicenseSection(license, customName, customURL, customBadge, badge
       break;
   }
   if (license != "None")
-    section += "*Click link for license details.*"
+    section += "\n*Click link for license details.*\n"
   return section;
 }
 

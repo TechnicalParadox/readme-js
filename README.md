@@ -1,5 +1,5 @@
 # README.js
-##### A JavaScript README.md generator that uses Node.js and the NPM Inquirer package.
+##### A JavaScript README.md generator using Node.js and Inquirer.
 ###License
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 *Click link for license details.*
@@ -14,22 +14,22 @@
 * [Questions](#questions)
 ---------------
 ## Installation:
-Download the files. Run 'npm init' in the root directory. Run 'node index.js' to launch the application.
+Download files. Run 'npm init' in root directory. Run 'node index.js' to launch application.
 ## Usage
-Launch the application and follow the on screen prompts to create your project's README file.
+Launch the application and follow the prompts to generate your project's README!
 
-![A screenshot of the application running in a linux terminal.](./assets/screenshot.png)
+![A screenshot of the application running in a Linux terminal.](./assets/screenshot.png)
 
 ## Credits
 [Giamo Lao](https://www.github.com/technicalparadox)
 ## Features
 * Node.js
-* NPM Inquirer
+* Inquirer
 ## Contribution Guidelines
 [The Contributor Covenant](https://www.contributor-covenant.org/)
 ## Tests
-* This README.md was generated using README.js
+* This README was generated using README.js!
 ## Questions
 Any questions should be directed to
-[Giamo Lao](https://www.github.com/technicalparadox)
-[giamolao98@gmail.com](mailto:https://www.github.com/technicalparadox)
+[Giamo Lao](https://www.github.com/TechnicalParadox)
+[giamolao98@gmail.com](mailto:https://www.github.com/TechnicalParadox)
