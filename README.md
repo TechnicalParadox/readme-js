@@ -15,7 +15,7 @@
 * [Questions](#questions)
 ---------------
 ## Installation:
-Download files. Run 'npm init' in root directory. Run 'node index.js' to launch application.
+Download files. Run 'npm init' in root directory and name the package 'readme-js'. Run 'npm install' in root directory. Run 'node index.js' to launch application.
 ## Usage
 Launch the application and follow the prompts to generate your project's README!
 
