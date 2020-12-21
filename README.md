@@ -33,5 +33,7 @@ Launch the application and follow the prompts to generate your project's README!
 * This README was generated using README.js!
 ## Questions
 Any questions should be directed to
+
 [Giamo Lao](https://www.github.com/TechnicalParadox)
+
 [giamolao98@gmail.com](mailto:https://www.github.com/TechnicalParadox)

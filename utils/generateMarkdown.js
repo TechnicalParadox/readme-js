@@ -151,8 +151,8 @@ function generateQuestions(exists, name, url, email)
 {
   if (exists)
   {
-    let section = "## Questions\nAny questions should be directed to \n";
-    section += "["+name+"]("+url+")\n";
+    let section = "## Questions\nAny questions should be directed to \n\n";
+    section += "["+name+"]("+url+")\n\n";
     section += "["+email+"](mailto:"+url+")";
     return section;
   }
