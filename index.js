@@ -8,6 +8,12 @@ var quick = false;
 // TODO: Create an array of questions for user input
 const questions = // TODO: Skippable questions should be skipped if quick = true
 [
+  {
+    type: 'confirm',
+    name: 'quick',
+    message: 'Would you like to skip the extras and do this quickly?',
+    default: false
+  },
   // Project Name (Required)
   {
     type: 'input',
@@ -27,8 +33,8 @@ const questions = // TODO: Skippable questions should be skipped if quick = true
     type: 'confirm',
     name: 'toc',
     message: 'Display Table of Contents?:',
-    default: false,
-    when: answers => {return !quick}
+    default: true,
+    when: a => {return !a.quick}
   },
   // Installation Instructions (check if needed)
   {
@@ -36,15 +42,15 @@ const questions = // TODO: Skippable questions should be skipped if quick = true
     name: 'installable',
     message: 'Is your project to be installed?:',
     default: false,
-    when: answers => {return !quick}
+    when: a => {return !a.quick}
   },
   // Installation Instructions (get if needed)
   {
     type: 'input',
     name: 'installation',
-    message: 'Installation Instructions:',
+    message: 'Installation Instructions (*):',
     validate: a => {return a ? true : 'Please enter the installation instructions!'},
-    when: answers => {return answers.installable}
+    when: a => {return a.installable}
   },
   // Usage (Required)
   {
@@ -68,10 +74,35 @@ const questions = // TODO: Skippable questions should be skipped if quick = true
       'MIT License',
       'Mozilla Public License 2.0',
       'Common Development and Distribution License',
-      'Eclipse Public License version 2.0'
+      'Eclipse Public License version 2.0',
+      'Custom License'
     ],
-    default: 0
+    default: 'Custom License'
+  },
+  {
+    type: 'confirm',
+    name: 'has_badge',
+    message: 'Do you have a filepath/URL for your License\'s badge?',
+    default: true,
+    when: a => {return a.license == 'Custom License';}
+  },
+  {
+    type: 'input',
+    name: 'license_badge_url',
+    message: 'License Badge Filepath/URL (*):',
+    validate: a => {return a ? true : 'Please enter the filepath/url!';},
+    when: a => {return a.has_badge;}
   }
+
+  // TODO: Let user add screenshots (required)
+
+  // TODO: Ask user for contributors (required)
+
+  // TODO: Ask user for features (if !quick), each feature emphasized with description
+
+  // TODO: if !quick, ask user for example tests of application (if applicable)
+
+  // TODO: Check if the user wants to change anything and change it
 ];
 
 // Function to write README file
@@ -91,42 +122,14 @@ function init()
 {
   // Check if user wants quick README or full custom.
   inquirer
-    .prompt
-    (
-      {
-        type: 'confirm',
-        name: 'quick',
-        message: 'Would you like to skip the extras and do this quickly?',
-        default: false
-      }
-    )
-    .then(a => {quick = a.quick; getInput();})
-    .catch(error => errorHandler(error));
-}
-
-// Get input from user
-function getInput()
-{
-  inquirer
     .prompt(questions)
-    .then(answers => postPrompter(answers))
+    .then(answers => {postPrompter(answers);})
     .catch(error => errorHandler(error));
 }
 
 // Handle the answers to the initial inquirer prompt
 function postPrompter(answers)
 {
-  // TODO: Let user add screenshots (required)
-
-  // TODO: If license is custom, allow entry of badge url and link to terms
-
-  // TODO: Ask user for contributors (required)
-
-  // TODO: Ask user for features (if !quick), each feature emphasized with description
-
-  // TODO: if !quick, ask user for example tests of application (if applicable)
-
-  // TODO: Check if the user wants to change anything and change it
 
   // Save file
   inquirer

@@ -25,9 +25,7 @@ function generateMarkdown(data)
   return `
 # ${data.title}
 ##### ${data.desc}
----------------
-${toc(data.toc)}
-${install(data.installation)}
+---------------${toc(data.toc)}${install(data.installation)}
 ## Usage
 ${data.usage}
 `;
@@ -39,7 +37,7 @@ function toc(use)
   if (use)
   {
     // TODO: return table of contents depending on what sections are added
-    return "## Table of Contents: \n * example \n * example \n---------------";
+    return "\n## Table of Contents: \n * example \n * example \n---------------";
   }
   else
     return "";
@@ -50,7 +48,7 @@ function install(instructions)
 {
   if (instructions)
   {
-    return "## Installation:\n"+instructions;
+    return "\n## Installation:\n"+instructions;
   }
   else
     return "";
