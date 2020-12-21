@@ -77,17 +77,25 @@ const questions =
       'GNU Library or "Lesser" General Public License (LGPL)',
       'MIT License',
       'Mozilla Public License 2.0',
-      'Common Development and Distribution License',
-      'Eclipse Public License version 2.0',
-      'Custom License'
+      'Eclipse Public License version 1.0',
+      'Custom License',
+      'None'
     ],
     default: 'Custom License'
+  },
+  // If Custom License, get name
+  {
+    type: 'input',
+    name: 'license_name',
+    message: 'Enter the name of the license (*):',
+    validate: a => {return a ? true : "Please enter the name of your license!";},
+    when: a => {return a.license == "Custom License";}
   },
   // If Custom License, do they have a custom badge?
   {
     type: 'confirm',
     name: 'has_badge',
-    message: 'Do you have a filepath/URL for your License\'s badge?',
+    message: 'Do you have a filepath/URL for your License\'s badge?:',
     default: true,
     when: a => {return a.license == 'Custom License';}
   },
@@ -99,11 +107,19 @@ const questions =
     validate: a => {return a ? true : 'Please enter the filepath/url!';},
     when: a => {return a.has_badge;}
   },
+  // If Custom License, link to URL of terms
+  {
+    type: 'input',
+    name: 'license_url',
+    message: 'Enter the URL to the terms of your license (*):',
+    validate: a => {return a ? true : 'Please enter the URL to the terms of your license!';},
+    when: a => {return a.license == "Custom License";}
+  },
   // Contributor(s) (Required)
   {
     type: 'input',
     name: 'contributors',
-    message: 'Enter contributors one by one, leave empty when finished (*):',
+    message: 'Enter contributors one by one, leave empty when finished, please include any Third Party attributions (*):',
     validate: a =>
     {
       if (!a && contributors.length == 0) // Need to enter at least one name
@@ -122,11 +138,11 @@ const questions =
   {
     type: 'input',
     name: 'contributorURLs',
-    message: 'Enter each contributor\'s GitHub URL one by one (*):',
+    message: 'Enter each contributor\'s URL one by one (*):',
     validate: a =>
     {
       if (!a)
-        return "Please enter a GitHub URL!";
+        return "Please enter a URL!";
       else
       {
         console.log("\n" + a + " added as the GitHub URL for " +contributors[contributorURLs.length]);
@@ -141,7 +157,7 @@ const questions =
   {
     type: 'input',
     name: 'imageAlts',
-    message: 'Enter descriptions of showcase images, one by one, leave blank when empty (*):',
+    message: 'Enter descriptions of showcase images, one by one, leave blank when finished (*):',
     validate: a =>
     {
       if (!a && imageAlts.length == 0) // Need to enter at least one name
@@ -207,7 +223,7 @@ const questions =
   {
     type: 'confirm',
     name: 'has_tests',
-    message: 'Do you have example test cases for your project?',
+    message: 'Do you have example test cases for your project?:',
     default: false,
     when: a => {return !a.quick;}
   },
@@ -230,6 +246,21 @@ const questions =
       }
     },
     when: a => {return a.has_tests}
+  },
+  // If !quick get ask for Contribution Guidelines
+  {
+    type: 'confirm',
+    name: 'has_cont_guidlines',
+    message: 'Does you want to give contribution guidelines?:',
+    default: false,
+    when: a => {return !a.quick;}
+  },
+  // If has_cont_guidlines, ask for them.
+  {
+    type: 'input',
+    name: 'cont_guidelines',
+    message: 'Enter your contribution guidelines, leave blank to default to the Contributor Covenant:',
+    when: a => {return a.has_cont_guidlines;}
   }
 
   // TODO: Check if the user wants to change anything and change it
@@ -238,12 +269,11 @@ const questions =
 // Function to write README file
 function writeToFile(fileName, data)
 {
-  console.log(data);
   const readmeMD = generateMarkdown(data);
-  fs.writeFile(('./'+fileName), readmeMD, err =>
+  fs.writeFile(fileName, readmeMD, err =>
     {
       if (err) throw new Error(err);
-      console.log("README created! Check out ./"+fileName+" to see it!");
+      console.log("README created! Check out "+fileName+" to see it!");
     });
 }
 
