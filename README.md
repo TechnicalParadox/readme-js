@@ -1,6 +1,6 @@
 # README.js
 ##### A JavaScript README.md generator using Node.js and Inquirer.
-###License
+### License
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 *Click link for license details.*
 
@@ -15,7 +15,7 @@
 * [Questions](#questions)
 ---------------
 ## Installation:
-Download files. Run 'npm init' in root directory and name the package 'readme-js'. Run 'npm install' in root directory. Run 'node index.js' to launch application.
+Download files. Run 'npm install' in root directory. Run 'node index.js' to launch application.
 ## Usage
 Launch the application and follow the prompts to generate your project's README!
 
