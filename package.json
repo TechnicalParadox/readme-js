@@ -1,6 +1,6 @@
 {
   "name": "readme-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A professional README generator, powered by Node.js/JavaScript",
   "main": "index.js",
   "scripts": {
