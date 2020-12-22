@@ -71,7 +71,7 @@ function toc(data)
 {
   if (data.toc) // If user wants ToC
   {
-    let list = "\n## Table of Contents:\n";
+    let list = "\n## Table of Contents\n";
     if (data.installable)
       list += "* [Installation](#installation)\n";
     list += "* [Usage](#usage)\n";
@@ -96,11 +96,11 @@ function install(instructions, deployedURL)
   let section = "";
   if (instructions)
   {
-    return "\n## Installation:\n"+instructions;
+    return "\n## Installation\n"+instructions;
   }
   else
   {
-    section += "\n ## Deployed URL:\n";
+    section += "\n ## Deployed URL\n";
     if (deployedURL)
       section += "[Click to launch]("+deployedURL+")";
     else

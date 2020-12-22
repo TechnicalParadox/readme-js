@@ -6,7 +6,7 @@
 *Click link for license details.*
 
 ---------------
-## Table of Contents:
+## Table of Contents
 * [Installation](#installation)
 * [Usage](#usage)
 * [Credits](#credits)
@@ -15,7 +15,7 @@
 * [Tests](#tests)
 * [Questions](#questions)
 ---------------
-## Installation:
+## Installation
 Download files. Run 'npm install' in root directory. Run 'node index.js' to launch application.
 ## Usage
 Launch the application and follow the prompts to generate your project's README!
