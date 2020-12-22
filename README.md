@@ -16,7 +16,10 @@
 * [Questions](#questions)
 ---------------
 ## Installation
-Download files. Run 'npm install' in root directory. Run 'node index.js' to launch application.
+1. Download source files as .zip or download from releases.
+2. Unzip the files into the root directory.
+3. Run 'npm install' in root directory.
+4. Run 'node index.js' in root directory to launch application.
 ## Usage
 Launch the application and follow the prompts to generate your project's README!
 
