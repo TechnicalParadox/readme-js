@@ -1,13 +1,13 @@
 {
   "name": "readme-js",
   "version": "1.0.1",
-  "description": "A professional README generator, powered by Node.js/JavaScript",
+  "description": "A professional README generator, powered by Node.js/Inquirer",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Giamo Lao",
-  "license": "ISC",
+  "license": "GNU GPLv3",
   "dependencies": {
     "inquirer": "^6.3.1"
   },
